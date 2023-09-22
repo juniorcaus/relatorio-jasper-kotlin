@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatorio_Teve_Venda" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="747102d1-dbde-4d74-b76d-f74b1067cdb4">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="codigoproduto" class="java.lang.String"/>
+	<field name="nomeproduto" class="java.lang.String"/>
+	<field name="dataultimavendanoperiodo" class="java.lang.String"/>
+	<field name="tevevendasnoperiodo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="10" width="300" height="40" uuid="e9a7ff34-7c0e-44be-811b-05eb44b528a7"/>
+				<textElement textAlignment="Right">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Relatorio  vendas de produtos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="50" width="590" height="4" uuid="29d70e10-629d-4bd3-a804-dcedca90caef"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="-11" y="2" width="70" height="30" uuid="6a3b1035-7608-42ec-8e7f-c9be9f5ad758"/>
+				<text><![CDATA[codigoproduto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="2" width="90" height="18" uuid="9d35ebba-91a4-403b-a1c9-bcb29c68218f"/>
+				<text><![CDATA[nomeproduto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="2" width="120" height="18" uuid="ca13d928-396f-48a3-b03c-91ef1305ede6"/>
+				<text><![CDATA[dataultimavendanoperiodo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="2" width="100" height="30" uuid="9214acb4-7544-4015-8e5c-6f3a621f3699"/>
+				<text><![CDATA[tevevendasnoperiodo]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="-83" y="15" width="100" height="30" uuid="8dfe5c8f-9ba1-4d16-86c8-744a79a28fb4"/>
+				<text><![CDATA[codigoproduto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="-10" y="8" width="68" height="30" uuid="929fe947-b57d-4f5a-8137-58d753e72462"/>
+				<textFieldExpression><![CDATA[$F{codigoproduto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="11" width="86" height="20" uuid="ccdfb991-de1e-46d0-8909-a1c213dd61f4"/>
+				<textFieldExpression><![CDATA[$F{nomeproduto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="219" y="7" width="100" height="14" uuid="413677fa-b437-49a4-b726-d4eaffe2ae82"/>
+				<textFieldExpression><![CDATA[$F{dataultimavendanoperiodo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="12" width="100" height="30" uuid="2e92714a-877b-451a-9e97-6778d7e0c0ed"/>
+				<textFieldExpression><![CDATA[$F{tevevendasnoperiodo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,91 @@
+1 relatorio teve vendas ou nao
+
+select
+    p.codpro AS CodigoProduto,
+    p.nompro AS NomeProduto,
+    COALESCE(
+        TO_CHAR(
+            (
+                SELECT MAX(ip.dtfiscal)
+                FROM itemped ip
+                WHERE ip.codpec = p.codpro
+                  AND ip.dtfiscal >= '2020-08-18'
+                  AND ip.dtfiscal <= '2020-09-18'
+            ),
+            'YYYY-MM-DD'
+        ),
+        'Nenhuma venda'
+    ) AS DataUltimaVendaNoPeriodo,
+    CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM itemped ip
+            WHERE ip.codpec = p.codpro
+              AND ip.dtfiscal >= '2020-08-18'
+              AND ip.dtfiscal <= '2020-09-18'
+        ) THEN 'Sim'
+        ELSE 'Não'
+    END AS TeveVendasNoPeriodo
+FROM
+    produtos p
+ORDER BY
+    CodigoProduto;
+
+
+
+
+
+---------------------
+
+2 relatorio cliente e funcionarios
+
+SELECT
+    Codigo,
+    Nome,
+    Tipo
+FROM (
+    SELECT
+        c.cli_cod_a AS Codigo,
+        c.cli_nome_a AS Nome,
+        'Cliente' AS Tipo
+    FROM
+        clientes c
+    WHERE
+        c.cli_cod_a IN (SELECT DISTINCT clie FROM pedido)
+    
+    UNION ALL
+    
+    SELECT
+        f.matr AS Codigo,
+        f.nome AS Nome,
+        'Funcionario' AS Tipo
+    FROM
+        funcionarios f
+) AS resultado
+ORDER BY Nome;
+
+----------------------------------------------------------------------------------------
+
+3 relatorio total vendas
+
+
+select
+    funcionarios.matr AS CodigoVendedor,
+    funcionarios.nome AS NomeVendedor,
+    produtos.codpro AS CodigoProduto,
+    produtos.nompro AS NomeProduto,
+    '2020-08-01 a 2020-08-31' AS Periodo,
+    COALESCE(SUM(itemped.preco), 0) AS ValorTotalVendas,
+    COALESCE(SUM(itemped.quant), 0) AS QuantidadeVendida
+FROM
+    funcionarios
+CROSS JOIN
+    produtos
+LEFT JOIN
+    itemped ON funcionarios.matr = itemped.vei_ds_funcionario  AND produtos.codpro = itemped.codpec
+WHERE
+    itemped.dtmov >= '2020-08-01' AND itemped.dtmov <= '2020-08-31'
+GROUP BY
+    funcionarios.matr, funcionarios.nome, produtos.codpro, produtos.nompro
+ORDER BY
+    funcionarios.matr, produtos.codpro;

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio-teve-venda-ou-nao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="805174d3-242d-4396-ac1d-859400e8a365">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="treinamento-qualy"/>
+	<queryString language="SQL">
+		<![CDATA[select
+    p.codpro AS CodigoProduto,
+    p.nompro AS NomeProduto,
+    COALESCE(
+        TO_CHAR(
+            (
+                SELECT MAX(ip.dtfiscal)
+                FROM itemped ip
+                WHERE ip.codpec = p.codpro
+                  AND ip.dtfiscal >= '2020-08-18'
+                  AND ip.dtfiscal <= '2020-09-18'
+            ),
+            'YYYY-MM-DD'
+        ),
+        'Nenhuma venda'
+    ) AS DataUltimaVendaNoPeriodo,
+    CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM itemped ip
+            WHERE ip.codpec = p.codpro
+              AND ip.dtfiscal >= '2020-08-18'
+              AND ip.dtfiscal <= '2020-09-18'
+        ) THEN 'Sim'
+        ELSE 'Não'
+    END AS TeveVendasNoPeriodo
+FROM
+    produtos p
+ORDER BY
+    CodigoProduto;]]>
+	</queryString>
+	<field name="codigoproduto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigoproduto"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoproduto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produtos"/>
+		<fieldDescription><![CDATA[codigoproduto]]></fieldDescription>
+	</field>
+	<field name="nomeproduto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nomeproduto"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomeproduto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produtos"/>
+		<fieldDescription><![CDATA[nomeproduto]]></fieldDescription>
+	</field>
+	<field name="dataultimavendanoperiodo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dataultimavendanoperiodo"/>
+		<property name="com.jaspersoft.studio.field.label" value="dataultimavendanoperiodo"/>
+		<fieldDescription><![CDATA[dataultimavendanoperiodo]]></fieldDescription>
+	</field>
+	<field name="tevevendasnoperiodo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tevevendasnoperiodo"/>
+		<property name="com.jaspersoft.studio.field.label" value="tevevendasnoperiodo"/>
+		<fieldDescription><![CDATA[tevevendasnoperiodo]]></fieldDescription>
+	</field>
+	<background>
+		<band height="37" splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="21" width="554" height="30" uuid="6c1b6cee-8d01-4825-986e-c4cdac0d8092"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Relatorio Vendas de produtos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="60" width="553" height="2" uuid="b1558d97-3ce9-423b-a4d1-b3506766f9c4"/>
+			</line>
+			<line>
+				<reportElement x="5" y="5" width="553" height="2" uuid="4723ced6-7171-4624-821c-0132c2bac2b9"/>
+			</line>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="458" y="30" width="100" height="30" uuid="837494f8-5f27-4b48-9620-da93b9cbba93"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="4f19e130-7b06-44e8-bd7a-1059bc9401f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e430c191-d508-40a3-9bea-3073c99a3f86"/>
+				</reportElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="130" height="30" uuid="85a8f476-a5ef-49c5-af4d-8ec9c77744c2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb901a10-b79e-4e30-81da-99265f90db29"/>
+				</reportElement>
+				<text><![CDATA[Nome do Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="-2" width="100" height="30" uuid="9b64d6cc-dfe3-4527-b94f-3bd0a6ab7b3f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69936321-2d3a-45cd-bd05-af8862fd6657"/>
+				</reportElement>
+				<text><![CDATA[Ultima Venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="100" height="30" uuid="d2ed23b1-4d05-460d-9711-6d6efbfe5a52">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7b721ed2-fbf3-4f90-b810-209a7d52d99d"/>
+				</reportElement>
+				<text><![CDATA[Teve Vendas?
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="30" width="553" height="2" uuid="25c609af-6e37-4c6c-91db-e573213492f8"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="76" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="4578f0f5-b2e8-4c10-944c-b203df2f366f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e430c191-d508-40a3-9bea-3073c99a3f86"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codigoproduto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="10" width="130" height="30" uuid="023a5b60-ec0e-40ea-bc09-9e1bf3149d8b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb901a10-b79e-4e30-81da-99265f90db29"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nomeproduto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="5" width="100" height="30" uuid="616e315a-f0a5-4130-9eb3-436d60070e4e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69936321-2d3a-45cd-bd05-af8862fd6657"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{dataultimavendanoperiodo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="5" width="100" height="30" uuid="eadee95c-2f2b-4bb2-9ab3-63ff2d026b97">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7b721ed2-fbf3-4f90-b810-209a7d52d99d"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{tevevendasnoperiodo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="74">
+			<textField>
+				<reportElement x="402" y="50" width="78" height="20" uuid="67d1ef12-f69f-4f6a-93e2-7334b8ee9b2f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="486" y="50" width="78" height="20" uuid="51f4e5ed-9ce5-4476-87a1-7437efb56fa7"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de  " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="43" splitType="Stretch"/>
+	</summary>
+</jasperReport>

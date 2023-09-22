@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_cliente_funcionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="02727eab-d75a-4207-9501-3e864b9ba292">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="treinamento-qualy"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[SELECT
+    Codigo,
+    Nome,
+    Tipo
+FROM (
+    SELECT
+        c.cli_cod_a AS Codigo,
+        c.cli_nome_a AS Nome,
+        'Cliente' AS Tipo
+    FROM
+        clientes c
+    WHERE
+        c.cli_cod_a IN (SELECT DISTINCT clie FROM pedido)
+    
+    UNION ALL
+    
+    SELECT
+        f.matr AS Codigo,
+        f.nome AS Nome,
+        'Funcionario' AS Tipo
+    FROM
+        funcionarios f
+) AS resultado
+ORDER BY Nome;]]>
+	</queryString>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="10" width="332" height="30" uuid="a9be7a00-3f74-449a-8760-21044095793e"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Clientes e Funcionarios]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="48" width="569" height="4" uuid="f7d996a5-fb0a-4ce3-b1ff-22abb14f5e39"/>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="2" width="80" height="14" uuid="c5e5c6b0-d173-412d-8114-2daa99e6f42d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f773958e-4a11-4378-9827-0864041a0e55"/>
+				</reportElement>
+				<text><![CDATA[codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="2" width="70" height="14" uuid="b4cb69c0-7877-4fce-8569-26f73f44aad8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d986942e-5124-4986-abb7-9ac97eb4700b"/>
+				</reportElement>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="100" height="25" uuid="c0ca7fbb-96b6-44aa-9484-49a73029c743">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4ad1c3af-4240-4c8b-92de-517a8333f95a"/>
+				</reportElement>
+				<text><![CDATA[tipo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="0" width="86" height="20" uuid="d290eebe-7b02-4d65-a412-7149562322b5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f773958e-4a11-4378-9827-0864041a0e55"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="5" width="70" height="19" uuid="6b0eb0e5-0221-41e0-b499-827cc427a858">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d986942e-5124-4986-abb7-9ac97eb4700b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="5" width="100" height="30" uuid="d920e362-3f9f-450a-9535-5135e124212e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4ad1c3af-4240-4c8b-92de-517a8333f95a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="-4" width="569" height="4" uuid="f9cfa700-da2b-4063-b0ab-a55c48a9ad5b"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="364" y="23" width="100" height="15" uuid="6cea3fba-7928-479f-a004-52aa5eba8761"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="466" y="23" width="100" height="15" uuid="b378d977-9352-46d0-9833-680f0c53336c"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="32" splitType="Stretch"/>
+	</summary>
+</jasperReport>
